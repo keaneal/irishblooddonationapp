@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hotmail.keanser.irishblooddonationapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.DisplayMessageActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.bloodlevels.BloodLevelsActivity"
+            android:label="@string/title_activity_blood_levels"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.questionnaire.QuestionnaireActivity"
+            android:label="@string/title_activity_questionnaire"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.findclinic.FindClinicActivity"
+            android:label="@string/title_activity_find_clinic"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.ContactDetails"
+            android:label="@string/title_activity_contact_details"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsRadioActivity"
+            android:label="@string/title_activity_display_clinic"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsListActivity"
+            android:label="@string/title_activity_display_local_clinics"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsRadioActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicInfoActivity"
+            android:label="@string/title_activity_display_clinics_info"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsLocalActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.findclinic.DisplayClinicsLocalActivity" />
+        </activity>
+        <activity
+            android:name="com.hotmail.keanser.irishblooddonationapp.myprofile.MyProfileActivity"
+            android:label="@string/title_activity_display_myprofile"
+            android:parentActivityName="com.hotmail.keanser.irishblooddonationapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>

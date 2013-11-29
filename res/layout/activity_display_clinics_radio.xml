@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/backgroundcolour" >
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Select a county..."
+        android:textSize="26sp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <RadioGroup
+        android:id="@+id/radioGroupCounties"
+		android:layout_width="match_parent"  
+   		android:layout_height="match_parent"  
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/radioCarlow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carlow" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+
+        <RadioButton
+            android:id="@+id/radioCavan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cavan" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+
+         <RadioButton
+            android:id="@+id/radioClare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clare" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioCork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cork" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioDonegal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donegal" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioDublinCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dublin City" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+         <RadioButton
+            android:id="@+id/radioDublinNorth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dublin North" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+         
+         <RadioButton
+            android:id="@+id/radioGalway"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Galway" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioKerry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kerry" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioKildare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kildare" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioKilkenny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kilkenny" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioLaois"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Laois" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioLeitrim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leitrim" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioLimerick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Limerick" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioLongford"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Longford" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+         <RadioButton
+            android:id="@+id/radioLouth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Louth" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />
+         
+        <RadioButton
+            android:id="@+id/radioMayo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mayo" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioMeath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meath" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioMonaghan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monaghan" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioOffaly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Offaly" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioRoscommon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Roscommon" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioSligo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sligo" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioTipperary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipperary" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioWaterford"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Waterford" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioWestmeath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Westmeath" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioWexford"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wexford" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+        	
+        <RadioButton
+            android:id="@+id/radioWicklow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wicklow" 
+            android:textSize="24sp"
+        	android:onClick="onRadioButtonClicked" />    
+         
+    </RadioGroup>
+
+</LinearLayout>
+</ScrollView>

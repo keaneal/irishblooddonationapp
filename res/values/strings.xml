@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="empty"> </string>
+    <string name="app_name">Irish Blood Donation App</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Put da wurds here</string>
+    <string name="button_send">Send</string>
+    <string name="button_blood_level">Blood Levels</string>
+    <string name="donate_blood">Can I Donate Blood?</string>
+    <string name="find_clinic">Find My Nearest Clinic</string>
+    <string name="my_profile">My Profile</string>
+    <string name="giveblood">Giveblood.ie</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_display_message">MyMessage</string>
+    <string name="hello_world">Hello world!!</string>
+    <string name="blood_type_select">Select your blood type</string>
+    
+    <string name="title_activity_blood_levels">Current Blood Levels</string>
+    <string name="title_activity_questionnaire">Questionnaire</string>
+    <string name="title_activity_find_clinic">Find My Nearest Clinic</string>
+    <string name="title_activity_contact_details"></string>
+    <string name="title_activity_display_clinic">County List</string>
+    <string name="title_activity_display_local_clinics">Local Clinics</string>
+    <string name="title_activity_display_clinics_info">Local Clinic Info</string>
+    <string name="title_activity_display_myprofile">My Profile</string>
+    
+    <string name="success">Success! You have answered some of the questions that you will be asked when you come to donate blood.  However there are other reasons why you may not be eligible to donate.  We cannot go through all of them here, but we will do so with you in detail at the blood donor clinic.  You can view a copy of the detailed health and lifestyle questionnaire that you will be asked to complete at the clinic at giveblood.ie. It is suggested that you have a look through those before you come to give blood.</string>
+      
+    <string-array name="questions">  
+    	<item>Question 1/10: Are you under 18?</item>
+    	<item>Question 2/10: Are you 65 years of age or over?</item>
+    	<item>Question 3/10: Do you weigh less than 7 stone 12 lbs (less than 50kgs) or more than 20 stone 6 lbs (130kgs)?</item>
+    	<item>Question 4/10: Were you pregnant in the last 12 months or are you pregnant at present?</item>
+    	<item>Question 5/10: Have you had a tattoo or body piercing in the last 4 months?</item>
+    	<item>Question 6/10: Have you ever had a blood transfusion?</item>
+    	<item>Question 7/10: Have you spent one year or more in total/cumulatively in the UK* between 1980 and 1996, including living, working or on holidays?</item>
+    	<item>Question 8/10: Have you visited an area where there is a risk of West Nile Virus (such as Canada, the USA, parts of Europe, Israel, Ukraine or Russia) in the last 28 days?</item>
+    	<item>Question 9/10: Have you visited a tropical* or a malarial country in the last 12 months?</item>
+    	<item>Question 10/10: Are you currently taking any medication other than the pill or HRT for the menopause?</item>
+    </string-array>
+        
+    <string-array name="responses">  
+    	<item>Unfortunately you are unable to give blood at this time. You must be over 18</item>
+    	<item>If you have never given blood before, then you cannot give blood. However if you are between 65 and 69 years and have given blood in the last 10 years then you can give blood. If you are 70 years or over and you have given blood in the last 2 years and you have a certificate of fitness from your GP, you can give blood. The certificate is valid for 12 months from the date of issue.</item>
+	    <item>If you weigh less than 50 kgs unfortunately you are unable to give blood at this time. If you weigh more than 130 kgs you are unable to give blood at a mobile blood donor clinic. However the weight bearing capacity of the donation beds in DOlier St and Stillorgan Clinics is higher. Please phone us for further information at 1850731137.</item>
+    	<item>Unfortunately, you are unable to give blood during pregnancy and for 12 months after your pregnancy.</item>
+    	<item>Unfortunately, you are unable to give blood for 4 months from the date of the tattoo or the piercing.</item>
+	    <item>Unfortunately you can never give blood unless the blood you received was your own or you received it in the Republic of Ireland before the 1st January 1980.</item>
+    	<item>Unfortunately, because of the risk of variant CJD you are unable to give blood.</item>
+    	<item>We ask donors who have been to an area at risk of WNV, to wait 28 days before giving blood to ensure that they  were not infected .  If you have been unwell while abroad or since returning we recommend that you visit your GP for advice.  If you have been diagnosed as having WNV infection or have symptoms of WNV infection, we ask that you do not donate for 6 months after complete recovery.  This is a precaution to make sure that the virus is not still in your blood even though you feel well. As WNV is transmitted by mosquitoes, the at risk areas change according to the seasons. Sometimes cases of WNV infection are reported in areas where they have not occurred before. As the areas at risk of WNV change over time and with the seasons, we advise that you ask us for further information if you have been abroad recently by contacting us at 1850 731137.</item>
+	    <item>Unfortunately, you are unable to give blood for 3 months after you return from a tropical country and for 12 months after you return from a malarial country.</item>
+    	<item>Unfortunately, you are unable to give blood if you are taking medication for some conditions such as for a heart condition or diabetes. However you may be able to give blood if you are on other medication such as antibiotic treatment for acne, or thyroxine for an underactive thyroid gland. If you are on medication for high blood pressure, provided your blood presssure is well controlled and your medication has not been changed in the last 4 weeks and you have never had any complications due to high blood pressure, you may be able to give blood. Please ring us (1850 731 137) so that we can advise you.</item>
+    </string-array>	
+    
+    <string name="county_prompt">Choose a county?</string>
+ 
+		<string name="Carlow">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Carlow/</string>
+		<string name="Cavan">http://www.giveblood.ie/Where_to_Give_Blood/Ardee_Centre/Cavan/</string>
+		<string name="Clare">http://www.giveblood.ie/Where_to_Give_Blood/Limerick_Centre/Clare/</string>
+		<string name="Cork">http://www.giveblood.ie/Where_to_Give_Blood/Munster_Centre/Cork/</string>
+		<string name="Donegal">http://www.giveblood.ie/Where_to_Give_Blood/Dublin_Centre/Donegal/</string>		
+		<string name="DublinCity">http://www.giveblood.ie/Where_to_Give_Blood/Dublin_Centre/Dublin/</string>
+		<string name="DublinNorth">http://www.giveblood.ie/Where_to_Give_Blood/Ardee_Centre/Dublin/</string>
+		<string name="Galway">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Galway/</string>
+		<string name="Kerry">http://www.giveblood.ie/Where_to_Give_Blood/Munster_Centre/Kerry/</string>
+		<string name="Kildare">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Kildare/</string>
+		<string name="Kilkenny">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Kilkenny/</string>
+		<string name="Laois">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Laois/</string>
+		<string name="Leitrim">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Leitrim/</string>
+		<string name="Limerick">http://www.giveblood.ie/Where_to_Give_Blood/Limerick_Centre/Limerick/</string>
+		<string name="Longford">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Longford/</string>
+		<string name="Louth">http://www.giveblood.ie/Where_to_Give_Blood/Ardee_Centre/Louth/</string>
+		<string name="Mayo">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Mayo/</string>
+		<string name="Meath">http://www.giveblood.ie/Where_to_Give_Blood/Ardee_Centre/Meath/</string>
+		<string name="Monaghan">http://www.giveblood.ie/Where_to_Give_Blood/Ardee_Centre/Monaghan/</string>
+		<string name="Offaly">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Offaly/</string>
+		<string name="Roscommon">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Roscommon/</string>
+		<string name="Sligo">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Sligo/</string>
+		<string name="Tipperary">http://www.giveblood.ie/Where_to_Give_Blood/Limerick_Centre/Tipperary/</string>
+		<string name="Waterford">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Waterford/</string>
+		<string name="Westmeath">http://www.giveblood.ie/Where_to_Give_Blood/Tuam_Centre/Westmeath/</string>
+		<string name="Wexford">http://www.giveblood.ie/Where_to_Give_Blood/Carlow_Centre/Wexford/</string>
+		<string name="Wicklow">http://www.giveblood.ie/Where_to_Give_Blood/Dublin_Centre/Wicklow/</string>
+		
+	<string-array name="blood_types">
+        <item>O+</item>
+        <item>O-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+		    
+</resources>
