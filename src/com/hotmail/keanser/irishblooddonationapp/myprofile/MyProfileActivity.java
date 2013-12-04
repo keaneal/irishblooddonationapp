@@ -17,14 +17,17 @@ import org.jsoup.select.Elements;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.text.Html;
@@ -36,6 +39,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.hotmail.keanser.irishblooddonationapp.R;
 import com.hotmail.keanser.irishblooddonationapp.bloodlevels.BloodLevels;
@@ -72,6 +77,8 @@ public class MyProfileActivity extends Activity implements
 	private int check=0;
 
 	static final int DATE_DIALOG_ID = 999;
+	
+	private ToggleButton toggleButton1;
 
 	
 	@Override
@@ -84,6 +91,7 @@ public class MyProfileActivity extends Activity implements
 		spinnerBloodType = (NDSpinner) findViewById(R.id.spinnerbloodtype);
 		tvCurrentBloodLevel = (TextView) findViewById(R.id.tvCurrentBloodLevel);
 		tvLastRefreshed = (TextView) findViewById(R.id.tvLastRefreshed);
+		toggleButton1 = (ToggleButton) findViewById(R.id.toggleButton1);
 		
 		// Convert string array array list of strings 
 		String[] array = getResources().getStringArray(R.array.blood_types);
@@ -123,6 +131,19 @@ public class MyProfileActivity extends Activity implements
 			// Set the last refreshed text if blood type hasn't been selected yet
 			tvLastRefreshed.setText(new StringBuilder()
 					.append("Last refreshed: Never"));
+			
+			// Disable the toggle button so alarm service cannot be started
+			toggleButton1.setEnabled(false);
+		}
+		
+		// Checking to see if alarmservice is running in order to set the 
+		// correct state of the toggle button
+		boolean alarmUp = (PendingIntent.getBroadcast(MyProfileActivity.this, 1234567, 
+				new Intent(getApplicationContext(),	AlarmReceiver.class), 
+		        PendingIntent.FLAG_NO_CREATE) != null);
+		
+		if (alarmUp == true){
+			toggleButton1.setChecked(true);
 		}
 		
 		addItemsOnSpinnerBloodType();
@@ -136,7 +157,9 @@ public class MyProfileActivity extends Activity implements
 		// set selected date into next date textview
 		tvNextDate.setText(new StringBuilder()
 				.append("Next eligible for donation: No date set yet"));
-
+		
+		
+		
 	}
 
 	public void addItemsOnSpinnerBloodType() {
@@ -178,6 +201,9 @@ public class MyProfileActivity extends Activity implements
 			// Commit the edits!
 			editor2.commit();
 			
+			// Enable toggle button
+			toggleButton1.setEnabled(true);
+			
 		}		
 	}
 
@@ -201,7 +227,7 @@ public class MyProfileActivity extends Activity implements
 		// set current date into textview
 		tvLastDate.setText(new StringBuilder()
 				// Month is 0 based, just add 1
-				.append(month + 1).append("-").append(day).append("-")
+				.append(day).append("-").append(month + 1).append("-")
 				.append(year).append(" "));
 
 	}
@@ -211,6 +237,7 @@ public class MyProfileActivity extends Activity implements
 		btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
 		btnAddReminder = (Button) findViewById(R.id.btnAddReminder);
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
+		
 
 		btnChangeDate.setOnClickListener(new OnClickListener() {
 			@Override
@@ -218,52 +245,124 @@ public class MyProfileActivity extends Activity implements
 				showDialog(DATE_DIALOG_ID);
 			}
 		});
-		
+
 		btnAddReminder.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-	
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");    
-				
-			    try {
-					Date dateWithoutTime = sdf.parse(sdf.format(selectedDate.getTime()));
-					
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+				try {
+					Date dateWithoutTime = sdf.parse(sdf.format(selectedDate
+							.getTime()));
+
 					Intent calIntent = new Intent(Intent.ACTION_EDIT);
 					calIntent.setType("vnd.android.cursor.item/event");
-					calIntent.putExtra(Events.TITLE, "Eligible to donate blood from today");
-					calIntent.putExtra(Events.DESCRIPTION, "Last donated on: " + dateWithoutTime);
-					calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+					calIntent.putExtra(Events.TITLE,
+							"Eligible to donate blood from today");
+					calIntent.putExtra(Events.DESCRIPTION, "Last donated on: "
+							+ dateWithoutTime);
+					calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY,
+							true);
 					calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
 							eligibleDate.getTimeInMillis());
 					calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
 							eligibleDate.getTimeInMillis());
 					startActivity(calIntent);
-					
+
 				} catch (ParseException e) {
 
 					e.printStackTrace();
 				}
-			    
+
 			}
 		});
-		
+
 		btnRefresh.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+
 				// Get previously selected blood level
-				SharedPreferences currentBloodTypePref = getApplicationContext().getSharedPreferences("bloodTypePref",
-						Context.MODE_PRIVATE);
-				currentBloodType = currentBloodTypePref.getString("bloodTypePref", "");
+				SharedPreferences currentBloodTypePref = getApplicationContext()
+						.getSharedPreferences("bloodTypePref",
+								Context.MODE_PRIVATE);
+				currentBloodType = currentBloodTypePref.getString(
+						"bloodTypePref", "");
+
+				int item_postion = bloodTypes.indexOf(currentBloodType);
 				
-				int item_postion= bloodTypes.indexOf(currentBloodType);// item which you want to click
 				spinnerBloodType.setSelection(item_postion, true);
-				View item_view = (View)spinnerBloodType.getChildAt(item_postion);
-				long item_id = spinnerBloodType.getAdapter().getItemId(item_postion);
+				View item_view = (View) spinnerBloodType
+						.getChildAt(item_postion);
+				long item_id = spinnerBloodType.getAdapter().getItemId(
+						item_postion);
 				spinnerBloodType.performItemClick(item_view, 0, item_id);
-				
+
+			}
+		});
+
+		toggleButton1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				if (toggleButton1.isChecked()) {
+
+					// Toast.makeText(MyProfileActivity.this, "ON",
+					// Toast.LENGTH_SHORT).show();
+
+					try {
+						AlarmManager alarms = (AlarmManager) MyProfileActivity.this
+								.getSystemService(Context.ALARM_SERVICE);
+
+						Intent intent = new Intent(getApplicationContext(),
+								AlarmReceiver.class);
+						intent.putExtra("currentBloodLevel", currentBloodLevel);
+
+
+						final PendingIntent pIntent = PendingIntent
+								.getBroadcast(MyProfileActivity.this, 1234567,
+										intent,
+										PendingIntent.FLAG_UPDATE_CURRENT);
+
+						// Cancel any previous alarms
+						alarms.cancel(pIntent);
+						
+						// Use inexact repeating which is easier on battery 
+						// System can phase events and not wake at exact times
+						alarms.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+								SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pIntent);
+            
+						
+						Toast.makeText(MyProfileActivity.this, "Blood Level Notifications Running",
+								Toast.LENGTH_SHORT).show();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				} else {
+
+
+					Intent intent = new Intent(getApplicationContext(),
+							AlarmReceiver.class);
+
+					final PendingIntent pIntent = PendingIntent.getBroadcast(
+							MyProfileActivity.this, 1234567, intent,
+							PendingIntent.FLAG_UPDATE_CURRENT);
+					
+					AlarmManager alarms = (AlarmManager) MyProfileActivity.this
+							.getSystemService(Context.ALARM_SERVICE);
+			
+					PendingIntent.getBroadcast(MyProfileActivity.this, 1234567, intent, 
+	                           PendingIntent.FLAG_UPDATE_CURRENT).cancel();
+					
+					alarms.cancel(pIntent);
+					
+					Toast.makeText(MyProfileActivity.this, "Blood Level Notifications Cancelled",
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -400,7 +499,6 @@ public class MyProfileActivity extends Activity implements
 
 			// HIDE THE SPINNER AFTER LOADING FEEDS
 			linlaHeaderProgress.setVisibility(View.GONE);
-
 			
 
 			String bloodLevel = BloodLevelList.get(0).getBloodLevel()

@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -97,6 +98,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hotmail.keanser.irishblooddonationapp.MainActivity" />
         </activity>
+        
+        <receiver
+            android:name="com.hotmail.keanser.irishblooddonationapp.myprofile.AlarmReceiver"
+            android:enabled="true"
+             >
+        </receiver>
+ 
+        <service android:name="com.hotmail.keanser.irishblooddonationapp.myprofile.TaskService" >
+        </service>
     </application>
 
 </manifest>

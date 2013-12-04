@@ -96,6 +96,35 @@
             android:text="@string/empty"
             android:textSize="16sp" />
     </LinearLayout>
+    
+    <LinearLayout      
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvNotification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.65"
+            android:text="Set notification for blood level:"
+            android:textSize="16sp" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:text="ToggleButton" />
+
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/tvNotificationDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notification_note"
+        android:textSize="16sp" />
        
     <LinearLayout
         android:layout_width="match_parent"
