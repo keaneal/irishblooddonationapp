@@ -14,7 +14,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_display_message">MyMessage</string>
     <string name="hello_world">Hello world!!</string>
-    <string name="blood_type_select">Select your blood type</string>
+    <string name="blood_type_select">Select Blood Type</string>
     <string name="notification_note">Note: Blood level is checked daily and notification triggered when it falls below 5 days</string>
     
     <string name="title_activity_blood_levels">Current Blood Levels</string>

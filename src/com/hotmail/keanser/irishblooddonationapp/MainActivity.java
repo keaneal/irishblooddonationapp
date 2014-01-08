@@ -57,8 +57,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 			
 		case R.id.FindClinicButton: 
+			if(CheckNetwork.isInternetAvailable(MainActivity.this)) //returns true if internet available
+			{ 
 			Intent intent3 = new Intent(this, DisplayClinicsRadioActivity.class);
-			startActivity(intent3);
+			startActivity(intent3); }
+			else
+			{ Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();	}
 			break;
 			
 		case R.id.BloodLevelButton: 

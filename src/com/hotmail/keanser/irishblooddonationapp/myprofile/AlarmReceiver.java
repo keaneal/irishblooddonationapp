@@ -17,10 +17,10 @@ public class AlarmReceiver extends BroadcastReceiver {
       Log.i(LOG_TAG, "AlarmReceiver invoked, starting Alarm Service in background");
       
 		Bundle bundle = intent.getExtras();
-		String bloodLevel = bundle.getString("currentBloodLevel");
+		String bloodLevel = bundle.getString("currentBloodType");
 
 		Intent serviceIntent = new Intent(context, TaskService.class);
-		serviceIntent.putExtra("currentBloodLevel2", bloodLevel);
+		serviceIntent.putExtra("currentBloodType2", bloodLevel);
 
 		context.startService(serviceIntent);
    }

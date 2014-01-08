@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,9 +43,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.hotmail.keanser.irishblooddonationapp.CheckNetwork;
+import com.hotmail.keanser.irishblooddonationapp.MainActivity;
 import com.hotmail.keanser.irishblooddonationapp.R;
 import com.hotmail.keanser.irishblooddonationapp.bloodlevels.BloodLevels;
-//import com.hotmail.keanser.irishblooddonationapp.myprofile.NDSpinner;
+
+
 
 public class MyProfileActivity extends Activity implements
 		OnItemSelectedListener {
@@ -68,88 +72,92 @@ public class MyProfileActivity extends Activity implements
 	private String currentBloodLevel;
 	private String currentBloodType;
 	private String lastRefreshed;
-	
+
 	private ArrayList<String> bloodTypes;
 
 	private int year;
 	private int month;
 	private int day;
-	private int check=0;
+	private int check = 0;
 
 	static final int DATE_DIALOG_ID = 999;
-	
+
 	private ToggleButton toggleButton1;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_myprofile);
 		// Show the Up button in the action bar.
-		setupActionBar();	
-		
+		setupActionBar();
+
 		spinnerBloodType = (NDSpinner) findViewById(R.id.spinnerbloodtype);
 		tvCurrentBloodLevel = (TextView) findViewById(R.id.tvCurrentBloodLevel);
 		tvLastRefreshed = (TextView) findViewById(R.id.tvLastRefreshed);
 		toggleButton1 = (ToggleButton) findViewById(R.id.toggleButton1);
-		
-		// Convert string array array list of strings 
+
+		// Convert string array array list of strings
 		String[] array = getResources().getStringArray(R.array.blood_types);
-	    List<String> list = new ArrayList<String>();
-	    list = Arrays.asList(array);
-	    bloodTypes = new ArrayList<String>(list);
-		
+		List<String> list = new ArrayList<String>();
+		list = Arrays.asList(array);
+		bloodTypes = new ArrayList<String>(list);
+
 		// Get previously selected blood type
-		SharedPreferences currentBloodLevelPref = getApplicationContext().getSharedPreferences("BloodLevelPrefName",
-				Context.MODE_PRIVATE);
-		currentBloodLevel = currentBloodLevelPref.getString("BloodLevelPrefName", "");
+		SharedPreferences currentBloodLevelPref = getApplicationContext()
+				.getSharedPreferences("BloodLevelPrefName",
+						Context.MODE_PRIVATE);
+		currentBloodLevel = currentBloodLevelPref.getString(
+				"BloodLevelPrefName", "");
 		
 		// Get previously selected blood level
-		SharedPreferences currentBloodTypePref = getApplicationContext().getSharedPreferences("bloodTypePref",
-				Context.MODE_PRIVATE);
+		SharedPreferences currentBloodTypePref = getApplicationContext()
+				.getSharedPreferences("bloodTypePref", Context.MODE_PRIVATE);
 		currentBloodType = currentBloodTypePref.getString("bloodTypePref", "");
-		
+
 		// Get last refreshed refreshed date
-		SharedPreferences lastRefreshedDatePref = getApplicationContext().getSharedPreferences("RefreshedDatePref",
-				Context.MODE_PRIVATE);
-		lastRefreshed = lastRefreshedDatePref.getString("RefreshedDatePref", "");
-		
-		// Very first time app is run currentBloodLevel and currentBloodType will be empty
-		if ((!(currentBloodLevel.isEmpty())) || (!(currentBloodType.isEmpty())) 
-				|| (!(lastRefreshed.isEmpty())) ) {
+		SharedPreferences lastRefreshedDatePref = getApplicationContext()
+				.getSharedPreferences("RefreshedDatePref", Context.MODE_PRIVATE);
+		lastRefreshed = lastRefreshedDatePref
+				.getString("RefreshedDatePref", "");
+
+		// Very first time app is run currentBloodLevel and currentBloodType
+		// will be empty
+		if ((!(currentBloodLevel.isEmpty())) || (!(currentBloodType.isEmpty()))
+				|| (!(lastRefreshed.isEmpty()))) {
 
 			// Set the previously selected blood type
 			spinnerBloodType.setSelection(bloodTypes.indexOf(currentBloodType));
-			
+
 			// Set the previously selected blood level
 			tvCurrentBloodLevel.setText(currentBloodLevel);
-			
+
 			// Set the last refreshed date
-			tvLastRefreshed.setText(lastRefreshed);			
-			
+			tvLastRefreshed.setText(lastRefreshed);
+
 		} else {
-			// Set the last refreshed text if blood type hasn't been selected yet
+			// Set the last refreshed text if blood type hasn't been selected
+			// yet
 			tvLastRefreshed.setText(new StringBuilder()
 					.append("Last refreshed: Never"));
-			
+
 			// Disable the toggle button so alarm service cannot be started
 			toggleButton1.setEnabled(false);
 		}
-		
-		// Checking to see if alarmservice is running in order to set the 
+
+		// Checking to see if alarmservice is running in order to set the
 		// correct state of the toggle button
-		boolean alarmUp = (PendingIntent.getBroadcast(MyProfileActivity.this, 1234567, 
-				new Intent(getApplicationContext(),	AlarmReceiver.class), 
-		        PendingIntent.FLAG_NO_CREATE) != null);
-		
-		if (alarmUp == true){
+		boolean alarmUp = (PendingIntent.getBroadcast(MyProfileActivity.this,
+				1234567, new Intent(getApplicationContext(),
+						AlarmReceiver.class), PendingIntent.FLAG_NO_CREATE) != null);
+
+		if (alarmUp == true) {
 			toggleButton1.setChecked(true);
 		}
-		
+
 		addItemsOnSpinnerBloodType();
 		setCurrentDateOnView();
 		addListenerOnButton();
-		
+
 		// set selected date into last date textview
 		tvLastDate.setText(new StringBuilder()
 				.append("Date of last donation: No date set yet"));
@@ -157,9 +165,7 @@ public class MyProfileActivity extends Activity implements
 		// set selected date into next date textview
 		tvNextDate.setText(new StringBuilder()
 				.append("Next eligible for donation: No date set yet"));
-		
-		
-		
+
 	}
 
 	public void addItemsOnSpinnerBloodType() {
@@ -168,47 +174,52 @@ public class MyProfileActivity extends Activity implements
 
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
-		
-		check = check + 1;
 
-		// When screen is opened initially wait for user to make 
-		// selection before retrieving blood level
-		if (check > 1) {
+		// Check for internet connection
+		if (CheckNetwork.isInternetAvailable(MyProfileActivity.this)) {
+
 			bloodType = (String) parent.getItemAtPosition(pos);
 
 			new BloodLevelParse().execute(bloodType);
-			
+
 			// We need an Editor object to make preference changes.
-			SharedPreferences currentBloodTypePref = getApplicationContext().getSharedPreferences("bloodTypePref",
-					Context.MODE_PRIVATE);
+			SharedPreferences currentBloodTypePref = getApplicationContext()
+					.getSharedPreferences("bloodTypePref", Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor1 = currentBloodTypePref.edit();
 			editor1.putString("bloodTypePref", bloodType);
 
 			// Commit the edits!
 			editor1.commit();
 
-			String stringDate = "Last refreshed: " + day + "-" + (month + 1) + "-" + year + " ";
-						
+			String stringDate = "Last refreshed: " + day + "-" + (month + 1)
+					+ "-" + year + " ";
+
 			// set current date into textview
-			tvLastRefreshed.setText(stringDate);	
-			
+			tvLastRefreshed.setText(stringDate);
+
 			// We need an Editor object to make preference changes.
-			SharedPreferences lastRefreshedDatePref = getApplicationContext().getSharedPreferences("RefreshedDatePref",
-					Context.MODE_PRIVATE);
+			SharedPreferences lastRefreshedDatePref = getApplicationContext()
+					.getSharedPreferences("RefreshedDatePref",
+							Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor2 = lastRefreshedDatePref.edit();
 			editor2.putString("RefreshedDatePref", stringDate);
-			
+
 			// Commit the edits!
 			editor2.commit();
-			
+
 			// Enable toggle button
 			toggleButton1.setEnabled(true);
-			
-		}		
+
+		} else {
+			Toast.makeText(MyProfileActivity.this, "No Internet Connection",
+					Toast.LENGTH_LONG).show();
+		}
 	}
 
 	public void onNothingSelected(AdapterView<?> parent) {
-		// Another interface callback
+		Toast.makeText(MyProfileActivity.this,
+				"No Internet Connection", Toast.LENGTH_LONG).show();
+		// Implementing interface method
 	}
 
 	// display current date
@@ -237,7 +248,6 @@ public class MyProfileActivity extends Activity implements
 		btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
 		btnAddReminder = (Button) findViewById(R.id.btnAddReminder);
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
-		
 
 		btnChangeDate.setOnClickListener(new OnClickListener() {
 			@Override
@@ -283,21 +293,27 @@ public class MyProfileActivity extends Activity implements
 			@Override
 			public void onClick(View v) {
 
-				// Get previously selected blood level
-				SharedPreferences currentBloodTypePref = getApplicationContext()
-						.getSharedPreferences("bloodTypePref",
-								Context.MODE_PRIVATE);
-				currentBloodType = currentBloodTypePref.getString(
-						"bloodTypePref", "");
+				// Check for internet connection
+				if (CheckNetwork.isInternetAvailable(MyProfileActivity.this)) {
+					// Get previously selected blood level
+					SharedPreferences currentBloodTypePref = getApplicationContext()
+							.getSharedPreferences("bloodTypePref",
+									Context.MODE_PRIVATE);
+					currentBloodType = currentBloodTypePref.getString(
+							"bloodTypePref", "");
 
-				int item_postion = bloodTypes.indexOf(currentBloodType);
-				
-				spinnerBloodType.setSelection(item_postion, true);
-				View item_view = (View) spinnerBloodType
-						.getChildAt(item_postion);
-				long item_id = spinnerBloodType.getAdapter().getItemId(
-						item_postion);
-				spinnerBloodType.performItemClick(item_view, 0, item_id);
+					int item_postion = bloodTypes.indexOf(currentBloodType);
+
+					spinnerBloodType.setSelection(item_postion, true);
+					View item_view = (View) spinnerBloodType
+							.getChildAt(item_postion);
+					long item_id = spinnerBloodType.getAdapter().getItemId(
+							item_postion);
+					spinnerBloodType.performItemClick(item_view, 0, item_id);
+				} else {
+					Toast.makeText(MyProfileActivity.this,
+							"No Internet Connection", Toast.LENGTH_LONG).show();
+				}
 
 			}
 		});
@@ -309,17 +325,20 @@ public class MyProfileActivity extends Activity implements
 
 				if (toggleButton1.isChecked()) {
 
-					// Toast.makeText(MyProfileActivity.this, "ON",
-					// Toast.LENGTH_SHORT).show();
-
 					try {
 						AlarmManager alarms = (AlarmManager) MyProfileActivity.this
 								.getSystemService(Context.ALARM_SERVICE);
 
+						// Get previously selected blood level
+						SharedPreferences currentBloodTypePref = getApplicationContext()
+								.getSharedPreferences("bloodTypePref",
+										Context.MODE_PRIVATE);
+						currentBloodType = currentBloodTypePref.getString(
+								"bloodTypePref", "");
+						
 						Intent intent = new Intent(getApplicationContext(),
 								AlarmReceiver.class);
-						intent.putExtra("currentBloodLevel", currentBloodLevel);
-
+						intent.putExtra("currentBloodType", currentBloodType);
 
 						final PendingIntent pIntent = PendingIntent
 								.getBroadcast(MyProfileActivity.this, 1234567,
@@ -328,22 +347,23 @@ public class MyProfileActivity extends Activity implements
 
 						// Cancel any previous alarms
 						alarms.cancel(pIntent);
-						
-						// Use inexact repeating which is easier on battery 
+
+						// Use inexact repeating which is easier on battery
 						// System can phase events and not wake at exact times
-						alarms.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-								SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_DAY, pIntent);
-            
-						
-						Toast.makeText(MyProfileActivity.this, "Blood Level Notifications Running",
+						alarms.setInexactRepeating(
+								AlarmManager.ELAPSED_REALTIME_WAKEUP,
+								SystemClock.elapsedRealtime() + 5000,
+								AlarmManager.INTERVAL_DAY
+								, pIntent);
+
+						Toast.makeText(MyProfileActivity.this,
+								"Blood Level Notifications Running",
 								Toast.LENGTH_SHORT).show();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
 				} else {
-
 
 					Intent intent = new Intent(getApplicationContext(),
 							AlarmReceiver.class);
@@ -351,16 +371,17 @@ public class MyProfileActivity extends Activity implements
 					final PendingIntent pIntent = PendingIntent.getBroadcast(
 							MyProfileActivity.this, 1234567, intent,
 							PendingIntent.FLAG_UPDATE_CURRENT);
-					
+
 					AlarmManager alarms = (AlarmManager) MyProfileActivity.this
 							.getSystemService(Context.ALARM_SERVICE);
-			
-					PendingIntent.getBroadcast(MyProfileActivity.this, 1234567, intent, 
-	                           PendingIntent.FLAG_UPDATE_CURRENT).cancel();
-					
+
+					PendingIntent.getBroadcast(MyProfileActivity.this, 1234567,
+							intent, PendingIntent.FLAG_UPDATE_CURRENT).cancel();
+
 					alarms.cancel(pIntent);
-					
-					Toast.makeText(MyProfileActivity.this, "Blood Level Notifications Cancelled",
+
+					Toast.makeText(MyProfileActivity.this,
+							"Blood Level Notifications Cancelled",
 							Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -372,7 +393,8 @@ public class MyProfileActivity extends Activity implements
 		switch (id) {
 		case DATE_DIALOG_ID:
 			// set date picker as current date
-			return new DatePickerDialog(this, datePickerListener, year, month, day);
+			return new DatePickerDialog(this, datePickerListener, year, month,
+					day);
 		}
 		return null;
 	}
@@ -382,20 +404,19 @@ public class MyProfileActivity extends Activity implements
 		// when dialog box is closed, below method will be called.
 		public void onDateSet(DatePicker view, int selectedYear,
 				int selectedMonth, int selectedDay) {
-			
+
 			year = selectedYear;
 			month = selectedMonth;
 			day = selectedDay;
 
-			// Get date selected 
+			// Get date selected
 			selectedDate = GregorianCalendar.getInstance();
 			selectedDate.set(year, month, day);
-			
+
 			// Get date selected and add 90 days to it
 			eligibleDate = GregorianCalendar.getInstance();
 			eligibleDate.set(year, month, day);
 			eligibleDate.add(Calendar.DATE, 90);
-			
 
 			// set selected date into textview
 			tvLastDate.setText(new StringBuilder()
@@ -405,17 +426,20 @@ public class MyProfileActivity extends Activity implements
 			// set selected date into textview
 			tvNextDate.setText(new StringBuilder()
 					.append("Eligible for donation from (90 Days): ")
-					.append(eligibleDate.get(Calendar.DAY_OF_MONTH)).append("-")
-					.append(eligibleDate.get(Calendar.MONTH)).append("-")
-					.append(eligibleDate.get(Calendar.YEAR)).append(" "));
-			
+					.append(eligibleDate.get(Calendar.DAY_OF_MONTH))
+					.append("-").append(eligibleDate.get(Calendar.MONTH))
+					.append("-").append(eligibleDate.get(Calendar.YEAR))
+					.append(" "));
+
 			// set warning text for eligible date
-			String sourceString = "<b>" + "Note: " + "</b> "
+			String sourceString = "<b>"
+					+ "Note: "
+					+ "</b> "
 					+ "The eligible from date above assumes that you have "
 					+ "no restrictions that may prevent you donating. To find out more about"
 					+ " possible restrictions complete the questionnaire and/or visit Giveblood.ie";
 			tvNextDateWarning.setText(Html.fromHtml(sourceString));
-					
+
 			// Get todays date
 			todaysDate = GregorianCalendar.getInstance();
 
@@ -425,12 +449,12 @@ public class MyProfileActivity extends Activity implements
 			} else {
 				llAddReminder.setVisibility(View.INVISIBLE);
 			}
-//			eligibleDate.setTime(c1.getTime());
-		
+			// eligibleDate.setTime(c1.getTime());
+
 		}
 	};
 
-	private class BloodLevelParse extends
+	public class BloodLevelParse extends
 			AsyncTask<String, Void, ArrayList<BloodLevels>> {
 
 		// CAST THE LINEARLAYOUT HOLDING THE MAIN PROGRESS (SPINNER)
@@ -499,23 +523,20 @@ public class MyProfileActivity extends Activity implements
 
 			// HIDE THE SPINNER AFTER LOADING FEEDS
 			linlaHeaderProgress.setVisibility(View.GONE);
-			
 
 			String bloodLevel = BloodLevelList.get(0).getBloodLevel()
 					.replaceAll("Blood supply", "");
 
-			
 			currentBloodLevel = ("Current blood levels for "
-					+ BloodLevelList.get(0).getBloodType() + " is"
-					+ bloodLevel);
-			
+					+ BloodLevelList.get(0).getBloodType() + " is" + bloodLevel);
+
 			tvCurrentBloodLevel.setText(currentBloodLevel);
-			
-			
+
 			// We need an Editor object to make preference changes.
 			// All objects are from android.context.Context
-			SharedPreferences currentBloodLevelPref = getApplicationContext().getSharedPreferences("BloodLevelPrefName",
-					Context.MODE_PRIVATE);
+			SharedPreferences currentBloodLevelPref = getApplicationContext()
+					.getSharedPreferences("BloodLevelPrefName",
+							Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = currentBloodLevelPref.edit();
 			editor.putString("BloodLevelPrefName", currentBloodLevel);
 
